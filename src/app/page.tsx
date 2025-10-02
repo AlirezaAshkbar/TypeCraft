@@ -1,95 +1,133 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import { Button, Container, Typography, Stack, Box, Chip } from "@mui/material";
+import Link from "next/link";
+import CodeIcon from "@mui/icons-material/Code";
+import ExtensionIcon from "@mui/icons-material/Extension";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const technologies = [
+    { name: "Next.js", icon: <CodeIcon fontSize="small" /> },
+    { name: "MUI (Material UI)", icon: <ExtensionIcon fontSize="small" /> },
+  ];
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  return (
+    <Container sx={{ textAlign: "center", py: { xs: 4, md: 6 } }}>
+      {/* Hero Section */}
+      <Typography
+        variant="h3"
+        gutterBottom
+        sx={{ fontWeight: "bold", mb: { xs: 1.5, md: 2.5 }, fontSize: { xs: "1.8rem", md: "2.5rem" } }}
+      >
+        🚀 Welcome to TypeCraft
+      </Typography>
+
+      <Typography
+        variant="h6"
+        gutterBottom
+        sx={{ mb: { xs: 2.5, md: 3.5 }, color: "text.secondary", fontSize: { xs: "0.95rem", md: "1.2rem" } }}
+      >
+        Enhance your typing skills while having fun! TypeCraft combines exciting typing games with smooth graphics to make learning enjoyable and effective.
+      </Typography>
+
+      {/* Summary Section */}
+      <Box
+        sx={{
+          maxWidth: { xs: "100%", sm: 550, md: 700 },
+          margin: "0 auto",
+          backgroundColor: "background.paper",
+          p: { xs: 2, md: 3 },
+          borderRadius: 2,
+          boxShadow: "0 6px 20px rgba(0,0,0,0.12)",
+          mb: { xs: 3, md: 4 },
+        }}
+      >
+        <Typography variant="body2" sx={{ mb: 1.5, fontSize: { xs: "0.85rem", md: "0.95rem" } }}>
+          TypeCraft is a university project created by <strong>Alireza Ashkbar</strong>. 
+          It features beautiful graphics, engaging challenges, and interactive typing games to help improve your typing speed and accuracy.
+        </Typography>
+        <Typography variant="body2" sx={{ mb: 1.5, fontSize: { xs: "0.85rem", md: "0.95rem" } }}>
+          Whether you are practicing or competing in a typing adventure, this app is designed to make learning enjoyable and effective. Sharpen your skills and enjoy the journey!
+        </Typography>
+
+        {/* Technologies Used */}
+        <Typography variant="subtitle1" sx={{ mb: 1, mt: 2.5, fontSize: { xs: "0.95rem", md: "1.1rem" } }}>
+          🛠 Technologies Used
+        </Typography>
+        <Stack direction="row" spacing={1} justifyContent="center" flexWrap="wrap">
+          {technologies.map((tech) => (
+            <Chip
+              key={tech.name}
+              icon={tech.icon}
+              label={tech.name}
+              color="primary"
+              variant="outlined"
+              sx={{ mb: 1, fontWeight: "bold", fontSize: { xs: "0.7rem", md: "0.85rem" } }}
             />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          ))}
+        </Stack>
+
+        {/* CSR Note */}
+        <Typography variant="caption" sx={{ mt: 1.5, fontStyle: "italic", color: "text.secondary" }}>
+          ⚡ This is a <strong>Client-Side Rendered (CSR) app</strong>.
+        </Typography>
+      </Box>
+
+      {/* Call to Action Buttons */}
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        spacing={2}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Button
+          component={Link}
+          href="/practice"
+          variant="contained"
+          sx={{
+            px: { xs: 4, md: 5 },
+            py: 1.2,
+            fontWeight: "bold",
+            borderRadius: "50px",
+            background: "linear-gradient(45deg, #f60202ff, #e33e3eff)",
+            color: "#fff",
+            boxShadow: "0 5px 16px rgba(255, 0, 0, 0.35)",
+            transition: "all 0.3s ease",
+            width: { xs: "100%", sm: "auto" },
+            "&:hover": {
+              transform: "translateY(-3px) scale(1.03)",
+              boxShadow: "0 6px 18px rgba(255, 0, 0, 0.4)",
+            },
+          }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          Start Practice
+        </Button>
+
+        <Button
+          component={Link}
+          href="/game"
+          variant="outlined"
+          sx={{
+            px: { xs: 4, md: 5 },
+            py: 1.2,
+            fontWeight: "bold",
+            borderRadius: "50px",
+            borderWidth: 2,
+            borderColor: "#42a5f5",
+            color: "#42a5f5",
+            boxShadow: "0 3px 12px rgba(66,165,245,0.25)",
+            transition: "all 0.3s ease",
+            width: { xs: "100%", sm: "auto" },
+            "&:hover": {
+              transform: "translateY(-3px) scale(1.03)",
+              boxShadow: "0 6px 18px rgba(66,165,245,0.4)",
+              backgroundColor: "rgba(66,165,245,0.08)",
+            },
+          }}
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          Play Game
+        </Button>
+      </Stack>
+    </Container>
   );
 }
