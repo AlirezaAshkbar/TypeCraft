@@ -8,10 +8,17 @@ type Props = {
   onFinish: (wpm: number, accuracy: number) => void;
   onStart?: () => void;
   stopTyping?: boolean;
-  text?: string; // optional text prop
+  text?: string;
+  onType?: (correct: boolean) => void;
 };
 
-export default function TypingBox({ onFinish, onStart, stopTyping, text: propText }: Props) {
+export default function TypingBox({
+  onFinish,
+  onStart,
+  stopTyping,
+  text: propText,
+  onType,
+}: Props) {
   const [text, setText] = useState<string[]>([]);
   const [typed, setTyped] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -24,10 +31,8 @@ export default function TypingBox({ onFinish, onStart, stopTyping, text: propTex
   // Initialize text
   useEffect(() => {
     if (propText) {
-      // Use passed text
       setText(propText.split(""));
     } else {
-      // Generate random words
       const minWords = 20;
       const maxWords = 40;
       const randomCount =
@@ -37,7 +42,6 @@ export default function TypingBox({ onFinish, onStart, stopTyping, text: propTex
         .sort(() => Math.random() - 0.5)
         .slice(0, randomCount);
 
-      // Join with spaces
       setText(shuffled.join(" ").split(""));
     }
   }, [propText]);
@@ -65,6 +69,9 @@ export default function TypingBox({ onFinish, onStart, stopTyping, text: propTex
 
       setTotalKeystrokes((prev) => prev + 1);
       if (e.key !== expectedChar) setWrongKeystrokes((prev) => prev + 1);
+
+      // 🔥 Trigger animation callback
+      if (onType) onType(e.key === expectedChar);
 
       setTyped((prev) => [...prev, e.key]);
       setCurrentIndex((prev) => prev + 1);
@@ -114,7 +121,7 @@ export default function TypingBox({ onFinish, onStart, stopTyping, text: propTex
       sx={{
         fontFamily: "monospace",
         fontSize: "1.5rem",
-        lineHeight: "2.5rem",
+        lineHeight: "2.2rem",
         maxWidth: "800px",
         userSelect: "none",
         whiteSpace: "pre-wrap",
@@ -140,11 +147,14 @@ export default function TypingBox({ onFinish, onStart, stopTyping, text: propTex
             key={idx}
             style={{
               ...style,
+              whiteSpace: "pre-wrap",
+              wordBreak: "normal",
+
               transition: "color 0.1s, opacity 0.1s",
               borderBottom: isCursor ? "4px solid red" : "none",
             }}
           >
-            {char}
+            {char === " " ? "\u00A0" : char /* 👈 spaces visible */}
           </span>
         );
       })}
